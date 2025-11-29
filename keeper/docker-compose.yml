@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  prediction-keeper:
+    build: .
+    container_name: prediction-keeper
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+    volumes:
+      # Optional: Mount logs directory
+      - ./logs:/app/logs
+    networks:
+      - keeper-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  keeper-network:
+    driver: bridge

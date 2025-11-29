@@ -1,0 +1,21 @@
+[Unit]
+Description=Prediction Market Keeper Service
+After=network.target
+
+[Service]
+Type=simple
+User=YOUR_USERNAME
+WorkingDirectory=/path/to/bobasodaxmonad/keeper
+ExecStart=/usr/bin/node /path/to/bobasodaxmonad/keeper/dist/index.js
+Restart=always
+RestartSec=10
+StandardOutput=append:/var/log/prediction-keeper/output.log
+StandardError=append:/var/log/prediction-keeper/error.log
+
+# Environment variables (alternative to .env file)
+# Environment="RPC_URL=https://your-rpc-url.com"
+# Environment="OPERATOR_PRIVATE_KEY=0x..."
+# Environment="PREDICTION_CONTRACT_ADDRESS=0x..."
+
+[Install]
+WantedBy=multi-user.target
