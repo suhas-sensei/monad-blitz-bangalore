@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { usePythPrice } from './usePythPrice'
-import { useEthPrice } from './useEthPrice'
+import { useMonPrice } from './useMonPrice'
 import { SUPPORTED_TOKENS } from '@/lib/pyth-config'
 
 interface PriceResult {
@@ -43,7 +43,7 @@ export function usePriceWithFallback(
   const pythResult = usePythPrice(tokenSymbol)
 
   // Only initialize Chainlink for ETH (keep it as backup)
-  const chainlinkResult = tokenSymbol === 'ETH' ? useEthPrice() : { price: null, isLoading: false, error: null }
+  const chainlinkResult = tokenSymbol === 'MON' ? useMonPrice() : { price: null, isLoading: false, error: null }
 
   useEffect(() => {
     // Priority 1: Use Pyth if available
@@ -57,7 +57,7 @@ export function usePriceWithFallback(
     }
 
     // Priority 2: For ETH, fallback to Chainlink if Pyth fails
-    if (tokenSymbol === 'ETH' && pythResult.error && !chainlinkResult.isLoading) {
+    if (tokenSymbol === 'MON' && pythResult.error && !chainlinkResult.isLoading) {
       if (chainlinkResult.price !== null && !chainlinkResult.error) {
         setFinalPrice(chainlinkResult.price)
         setSource('chainlink')

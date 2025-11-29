@@ -15,6 +15,6 @@ import { usePythPrice } from './usePythPrice'
  * return <div>BTC Price: ${price?.toLocaleString()}</div>
  * ```
  */
-export function useBtcPrice() {
-  return usePythPrice('BTC')
+export function useMonPrice() {
+  return usePythPrice('MON')
 }

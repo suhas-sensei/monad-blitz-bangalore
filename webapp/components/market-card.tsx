@@ -4,9 +4,9 @@ import { ArrowUp, ArrowDown } from "lucide-react"
 import { useState, useRef, useEffect, useMemo } from "react"
 import { usePriceWithFallback } from "@/hooks/usePriceWithFallback"
 import { useCurrentRound } from "@/hooks/useCurrentRound"
-import { SUPPORTED_TOKENS } from "@/lib/pyth-config"
-import EthPriceChart from "./eth-price-chart"
+import { SUPPORTED_TOKENS } from "@/lib/pyth-config" 
 import { monadTestnet } from "./providers"
+import MonPriceChart from "./mon-price-chart"
 
 interface MarketCardProps {
   marketName: string
@@ -200,7 +200,7 @@ export default function MarketCard({ marketName, onSwipeComplete, hasSwipedThisR
     }
     try {
       await (window as any).ethereum.request({
-        method: 'wallet_addEthereumChain',
+        method: 'wallet_addMonadChain',
         params: [{
           chainId: `0x${monadTestnet.id.toString(16)}`,
           chainName: monadTestnet.name,
@@ -209,7 +209,7 @@ export default function MarketCard({ marketName, onSwipeComplete, hasSwipedThisR
           blockExplorerUrls: [monadTestnet.blockExplorers.default.url],
         }],
       })
-      setFaucetStatus('Base Sepolia added to wallet')
+      setFaucetStatus('Monad Testnet added to wallet')
       setTimeout(() => setFaucetStatus(null), 2500)
     } catch (err) {
       console.error('Failed to add network:', err)
@@ -337,8 +337,8 @@ export default function MarketCard({ marketName, onSwipeComplete, hasSwipedThisR
                 <p className="text-sm opacity-80 mt-1">Winners split the pool minus fees. Claim after results land.</p>
               </div>
               <div className="bg-white/5 rounded-xl p-3 border border-white/10">
-                <p className="text-yellow-300 font-semibold">4. Base Sepolia</p>
-                <p className="text-sm opacity-80 mt-1">We’re on Base Sepolia testnet—grab test ETH and add the network.</p>
+                <p className="text-yellow-300 font-semibold">4. Monad Testnet</p>
+                <p className="text-sm opacity-80 mt-1">We’re on Monad Testnet testnet—grab test MON and add the network.</p>
               </div>
             </div>
 
@@ -347,13 +347,13 @@ export default function MarketCard({ marketName, onSwipeComplete, hasSwipedThisR
                 onClick={handleCopyFaucet}
                 className="flex-1 bg-yellow-400 text-black font-bold py-3 px-4 rounded-xl hover:bg-yellow-300 transition"
               >
-                Copy Base Sepolia faucet link
+                Copy Monad Testnet faucet link
               </button>
               <button
                 onClick={handleAddNetwork}
                 className="flex-1 border border-yellow-400 text-yellow-300 font-bold py-3 px-4 rounded-xl hover:bg-yellow-400/10 transition"
               >
-                Add Base Sepolia to wallet
+                Add Monad Testnet to wallet
               </button>
             </div>
 
@@ -499,7 +499,7 @@ export default function MarketCard({ marketName, onSwipeComplete, hasSwipedThisR
         {/* Chart Area */}
         <div className="flex-1 mb-4 sm:mb-6 relative">
           {isSupported ? (
-            <EthPriceChart currentPrice={price} lockPrice={lockPrice} />
+            <MonPriceChart currentPrice={price} lockPrice={lockPrice} />
           ) : (
             <>
               <div className="absolute inset-0 flex items-end justify-center gap-0.5">

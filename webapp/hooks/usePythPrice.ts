@@ -70,10 +70,10 @@ export function usePythPrice(tokenSymbol: keyof typeof SUPPORTED_TOKENS): UsePyt
         // Convert price based on exponent
         // Pyth prices are returned as price * 10^expo
         // For example: price=180523, expo=-2 means actual price is 1805.23
-        const formattedPrice = Number(priceData.price) * Math.pow(10, priceData.expo)
+        const formattedPrice = Number(priceData.price)  
         const formattedConf = Number(priceData.conf) * Math.pow(10, priceData.expo)
 
-        console.log(`✅ ${tokenSymbol}/USD: $${formattedPrice.toFixed(2)}`)
+        console.log(`✅ ${tokenSymbol}/USD: $${formattedPrice}`)
         console.log(`   Confidence: ±$${formattedConf.toFixed(2)}`)
         console.log(`   Publish Time: ${new Date(priceData.publish_time * 1000).toLocaleTimeString()}`)
 
